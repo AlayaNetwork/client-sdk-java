@@ -24,7 +24,7 @@ Depending on the build tool, use the following methods to add related dependenci
 > maven reference:
 ```xml
 <dependency>
-    <groupId>com.platon.sdk</groupId>
+    <groupId>com.alaya.sdk</groupId>
     <artifactId>core</artifactId>
     <version>0.16.0.0</version>
 </dependency>
@@ -41,7 +41,7 @@ repositories {
 
 > gradle way of reference:
 ```
-compile "com.platon.client:core:0.16.0.0"
+compile "com.alaya.sdk:core:0.16.0.0"
 ```
 
 ## Basic API Usage
