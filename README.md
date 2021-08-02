@@ -18,16 +18,16 @@
 
 ```
 <dependency>
-    <groupId>com.platon.sdk</groupId>
+    <groupId>com.alaya.sdk</groupId>
     <artifactId>core</artifactId>
-    <version>0.15.1.14</version>
+    <version>0.16.0.0</version>
 </dependency>
 ```
 
 or
 
 ```
-compile "com.platon.sdk:core:0.15.1.14"
+compile "com.alaya.sdk:core:0.16.0.0"
 ```
 
 * use in project
