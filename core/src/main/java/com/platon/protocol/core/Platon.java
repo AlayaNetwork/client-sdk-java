@@ -1,5 +1,8 @@
 package com.platon.protocol.core;
 
+import com.platon.protocol.admin.methods.response.BooleanResponse;
+import com.platon.protocol.admin.methods.response.TxPoolStatus;
+import com.platon.protocol.admin.methods.response.admin.AdminDataDir;
 import com.platon.protocol.core.methods.request.ShhFilter;
 import com.platon.protocol.core.methods.response.*;
 
@@ -18,6 +21,12 @@ public interface Platon {
     Request<?, NetListening> netListening();
 
     Request<?, NetPeerCount> netPeerCount();
+
+    Request<?, BooleanResponse> adminAddPeer(String url);
+
+    Request<?, BooleanResponse> adminRemovePeer(String url);
+
+    Request<?, AdminDataDir> adminDataDir();
 
     Request<?, PlatonProtocolVersion> platonProtocolVersion();
 
@@ -122,6 +131,8 @@ public interface Platon {
     Request<?, ShhMessages> shhGetFilterChanges(BigInteger filterId);
 
     Request<?, ShhMessages> shhGetMessages(BigInteger filterId);
+
+    Request<?, TxPoolStatus> txPoolStatus();
 
     Request<?, PlatonEvidences> platonEvidences();
     
