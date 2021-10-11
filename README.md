@@ -3,7 +3,7 @@
 
 # Build
 ```
-    git clone https://github.com/PlatONnetwork/client-sdk-java.git
+    git clone https://github.com/AlayaNetwork/client-sdk-java.git
     cd client-sdk-java/
     ./gradlew clean jar            //Generate jar package
     ./gradlew clean distZip        //Generate code generation skeleton tool
