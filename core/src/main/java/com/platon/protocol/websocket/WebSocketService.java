@@ -17,6 +17,7 @@ import rx.subjects.BehaviorSubject;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
@@ -62,7 +63,7 @@ public class WebSocketService implements Web3jService {
     }
 
     public WebSocketService(WebSocketClient webSocketClient,
-                     boolean includeRawResponses) {
+                            boolean includeRawResponses) {
         this(webSocketClient, Executors.newScheduledThreadPool(1), includeRawResponses);
     }
 
@@ -159,9 +160,9 @@ public class WebSocketService implements Web3jService {
     private void setRequestTimeout(long requestId) {
         executor.schedule(
                 () -> closeRequest(
-                    requestId,
-                    new IOException(
-                        String.format("Request with id %d timed out", requestId))),
+                        requestId,
+                        new IOException(
+                                String.format("Request with id %d timed out", requestId))),
                 REQUEST_TIMEOUT,
                 TimeUnit.SECONDS);
     }
@@ -402,10 +403,10 @@ public class WebSocketService implements Web3jService {
     private Request<String, PlatonUnsubscribe> unsubscribeRequest(
             String subscriptionId, String unsubscribeMethod) {
         return new Request<>(
-                        unsubscribeMethod,
-                        Collections.singletonList(subscriptionId),
-                        this,
-                        PlatonUnsubscribe.class);
+                unsubscribeMethod,
+                Collections.singletonList(subscriptionId),
+                this,
+                PlatonUnsubscribe.class);
     }
 
     @Override

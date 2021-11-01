@@ -2,6 +2,11 @@ package com.platon.protocol.core;
 
 import com.platon.protocol.Web3j;
 import com.platon.protocol.Web3jService;
+import com.platon.protocol.admin.methods.response.BooleanResponse;
+import com.platon.protocol.admin.methods.response.TxPoolStatus;
+import com.platon.protocol.admin.methods.response.admin.AdminDataDir;
+import com.platon.protocol.core.methods.response.DebugWaitSlashingNodeList;
+import com.platon.protocol.core.methods.response.PlatonSignTransaction;
 import com.platon.protocol.core.methods.request.ShhFilter;
 import com.platon.protocol.core.methods.response.*;
 import com.platon.protocol.rx.JsonRpc2_0Rx;
@@ -9,6 +14,7 @@ import com.platon.protocol.websocket.events.LogNotification;
 import com.platon.protocol.websocket.events.NewHeadsNotification;
 import com.platon.utils.Async;
 import com.platon.utils.Numeric;
+import com.platon.utils.Strings;
 import rx.Observable;
 
 import java.io.IOException;
@@ -84,6 +90,90 @@ public class JsonRpc2_0Web3j implements Web3j {
                 Collections.<String>emptyList(),
                 web3jService,
                 NetPeerCount.class);
+    }
+
+    @Override
+    public Request<?, AdminNodeInfo> adminNodeInfo() {
+        return new Request<>(
+                "admin_nodeInfo", Collections.emptyList(), web3jService, AdminNodeInfo.class);
+    }
+
+    @Override
+    public Request<?, AdminPeers> adminPeers() {
+        return new Request<>(
+                "admin_peers", Collections.emptyList(), web3jService, AdminPeers.class);
+    }
+
+    @Override
+    public Request<?, BooleanResponse> adminAddPeer(String url) {
+        return new Request<>(
+                "admin_addPeer", Arrays.asList(url), web3jService, BooleanResponse.class);
+    }
+
+    @Override
+    public Request<?, BooleanResponse> adminRemovePeer(String url) {
+        return new Request<>(
+                "admin_removePeer", Arrays.asList(url), web3jService, BooleanResponse.class);
+    }
+
+    @Override
+    public Request<?, AdminDataDir> adminDataDir() {
+        return new Request<>(
+                "admin_datadir", Collections.emptyList(), web3jService, AdminDataDir.class);
+    }
+
+    @Override
+    public Request<?, BooleanResponse> adminStartRPC(String host,int port,String cors,String apis) {
+        if(host == null){
+            host = "localhost";
+        }
+        if(cors == null){
+            cors = "";
+        }
+        if(Strings.isBlank(apis)){
+            apis = "platon,net,web3,debug,admin";
+        }
+        return new Request<>(
+                "admin_startRPC", Arrays.asList(host,port,cors,apis), web3jService, BooleanResponse.class);
+    }
+
+    @Override
+    public Request<?, BooleanResponse> adminStartWS(String host,int port,String cors,String apis) {
+        if(host == null){
+            host = "localhost";
+        }
+        if(cors == null){
+            cors = "";
+        }
+        if(Strings.isBlank(apis)){
+            apis = "platon,net,web3,debug,admin";
+        }
+        return new Request<>(
+                "admin_startWS", Arrays.asList(host,port,cors,apis), web3jService, BooleanResponse.class);
+    }
+
+    @Override
+    public Request<?, BooleanResponse> adminStopRPC() {
+        return new Request<>(
+                "admin_stopRPC", Collections.<String>emptyList(), web3jService, BooleanResponse.class);
+    }
+
+    @Override
+    public Request<?, BooleanResponse> adminStopWS() {
+        return new Request<>(
+                "admin_stopWS", Collections.<String>emptyList(), web3jService, BooleanResponse.class);
+    }
+
+    @Override
+    public Request<?, BooleanResponse> adminExportChain(String file) {
+        return new Request<>(
+                "admin_exportChain", Arrays.asList(file), web3jService, BooleanResponse.class);
+    }
+
+    @Override
+    public Request<?, BooleanResponse> adminImportChain(String file) {
+        return new Request<>(
+                "admin_importChain", Arrays.asList(file), web3jService, BooleanResponse.class);
     }
 
     @Override
@@ -515,6 +605,12 @@ public class JsonRpc2_0Web3j implements Web3j {
     }
 
     @Override
+    public Request<?, TxPoolStatus> txPoolStatus() {
+        return new Request<>(
+                "txpool_status", Collections.<String>emptyList(), web3jService, TxPoolStatus.class);
+    }
+
+    @Override
     public Observable<NewHeadsNotification> newHeadsNotifications() {
         return web3jService.subscribe(
                 new Request<>(
@@ -664,32 +760,32 @@ public class JsonRpc2_0Web3j implements Web3j {
                 PlatonEvidences.class);
     }
 
-	@Override
-	public Request<?, AdminProgramVersion> getProgramVersion() {
+    @Override
+    public Request<?, AdminProgramVersion> getProgramVersion() {
         return new Request<>(
                 "admin_getProgramVersion",
                 Collections.<String>emptyList(),
                 web3jService,
                 AdminProgramVersion.class);
-	}
+    }
 
-	@Override
-	public Request<?, AdminSchnorrNIZKProve> getSchnorrNIZKProve() {
+    @Override
+    public Request<?, AdminSchnorrNIZKProve> getSchnorrNIZKProve() {
         return new Request<>(
                 "admin_getSchnorrNIZKProve",
                 Collections.<String>emptyList(),
                 web3jService,
                 AdminSchnorrNIZKProve.class);
-	}
+    }
 
-	@Override
-	public Request<?, DebugEconomicConfig> getEconomicConfig() {
+    @Override
+    public Request<?, DebugEconomicConfig> getEconomicConfig() {
         return new Request<>(
                 "debug_economicConfig",
                 Collections.<String>emptyList(),
                 web3jService,
                 DebugEconomicConfig.class);
-	}
+    }
 
     @Override
     public Request<?, PlatonChainId> getChainId() {
@@ -698,5 +794,77 @@ public class JsonRpc2_0Web3j implements Web3j {
                 Collections.<String>emptyList(),
                 web3jService,
                 PlatonChainId.class);
+    }
+
+    @Override
+    public Request<?, DebugWaitSlashingNodeList> getWaitSlashingNodeList() {
+        return new Request<>(
+                "debug_getWaitSlashingNodeList",
+                Collections.<String>emptyList(),
+                web3jService,
+                DebugWaitSlashingNodeList.class);
+    }
+
+    @Override
+    public Request<?, PlatonRawTransaction> platonGetRawTransactionByHash(String transactionHash) {
+        return new Request<>(
+                "platon_getRawTransactionByHash",
+                Arrays.asList(transactionHash),
+                web3jService,
+                PlatonRawTransaction.class);
+    }
+
+    @Override
+    public Request<?, PlatonRawTransaction> platonGetRawTransactionByBlockHashAndIndex(String blockHash, String index) {
+        return new Request<>(
+                "platon_getRawTransactionByBlockHashAndIndex",
+                Arrays.asList(blockHash,index),
+                web3jService,
+                PlatonRawTransaction.class);
+    }
+
+    @Override
+    public Request<?, PlatonRawTransaction> platonGetRawTransactionByBlockNumberAndIndex(String blockNumber, String index) {
+        return new Request<>(
+                "platon_getRawTransactionByBlockNumberAndIndex",
+                Arrays.asList(blockNumber,index),
+                web3jService,
+                PlatonRawTransaction.class);
+    }
+
+    @Override
+    public Request<?, PlatonGetAddressHrp> platonGetAddressHrp() {
+        return new Request<>(
+                "platon_getAddressHrp",
+                Collections.<String>emptyList(),
+                web3jService,
+                PlatonGetAddressHrp.class);
+    }
+
+    @Override
+    public Request<?, PlatonSignTransaction> platonSignTransaction(com.platon.protocol.core.methods.request.Transaction transaction) {
+        return new Request<>(
+                "platon_signTransaction",
+                Arrays.asList(transaction),
+                web3jService,
+                PlatonSignTransaction.class);
+    }
+
+    @Override
+    public Request<?, BooleanResponse> minerSetGasPrice(String minGasPrice) {
+        return new Request<>(
+                "miner_setGasPrice",
+                Arrays.asList(minGasPrice),
+                web3jService,
+                BooleanResponse.class);
+    }
+
+    @Override
+    public Request<?, AdminPeerEvents> adminPeerEvents() {
+        return new Request<>(
+                "admin_peerEvents",
+                Collections.<String>emptyList(),
+                web3jService,
+                AdminPeerEvents.class);
     }
 }

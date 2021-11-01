@@ -3,7 +3,7 @@
 
 # Build
 ```
-    git clone https://github.com/PlatONnetwork/client-sdk-java.git
+    git clone https://github.com/AlayaNetwork/client-sdk-java.git
     cd client-sdk-java/
     ./gradlew clean jar            //Generate jar package
     ./gradlew clean distZip        //Generate code generation skeleton tool
@@ -20,14 +20,14 @@
 <dependency>
     <groupId>com.alaya.sdk</groupId>
     <artifactId>core</artifactId>
-    <version>0.16.0.0</version>
+    <version>0.16.1.0</version>
 </dependency>
 ```
 
 or
 
 ```
-compile "com.alaya.sdk:core:0.16.0.0"
+compile "com.alaya.sdk:core:0.16.1.0"
 ```
 
 * use in project
